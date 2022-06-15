@@ -10,3 +10,5 @@
 - TypeScript
 
 ---
+
+![](https://github.com/Pedrogj/React-Formik/blob/main/images/img1.jpg)

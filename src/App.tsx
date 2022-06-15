@@ -1,7 +1,9 @@
+import { AppRouter } from "./route/AppRouter";
+
 function App() {
   return (
     <>
-      <h1>React-Formik</h1>
+      <AppRouter />
     </>
   );
 }

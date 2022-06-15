@@ -17,6 +17,10 @@ const pages = [
     to: "register",
     link: "Register",
   },
+  {
+    to: "formik-basic",
+    link: "Formik Basic",
+  },
 ];
 
 const Navbar = () => {

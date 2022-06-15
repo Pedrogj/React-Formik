@@ -1,4 +1,5 @@
-import { useFormik, FormikErrors } from "formik";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
   Button,
   Card,
@@ -9,49 +10,28 @@ import {
   TextField,
 } from "@mui/material";
 
-interface FormValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
 export const FormikYupPage = () => {
-  const validate = ({ firstName, lastName, email }: FormValues) => {
-    const errors: FormikErrors<FormValues> = {};
+  const { handleSubmit, errors, touched, getFieldProps } = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
 
-    if (!firstName) {
-      errors.firstName = "Required";
-    } else if (firstName.length >= 16) {
-      errors.firstName = "Must be 15 characters or less";
-    }
-
-    if (!lastName) {
-      errors.lastName = "Required";
-    } else if (lastName.length >= 10) {
-      errors.lastName = "Must be 10 characters or less";
-    }
-
-    if (!email) {
-      errors.email = "Required";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      errors.email = "Invalid email address";
-    }
-
-    return errors;
-  };
-
-  const { handleChange, values, handleSubmit, errors, touched, handleBlur } =
-    useFormik({
-      initialValues: {
-        firstName: "",
-        lastName: "",
-        email: "",
-      },
-      onSubmit: (values) => {
-        console.log(values);
-      },
-      validate,
-    });
+    // Validation with Yup
+    validationSchema: Yup.object({
+      firstName: Yup.string()
+        .max(15, "Must be 15 characters or less")
+        .required("Required"),
+      lastName: Yup.string()
+        .max(10, "Must be 10 characters or less")
+        .required("Required"),
+      email: Yup.string().email("Email no valid").required("Required"),
+    }),
+  });
 
   return (
     <Box
@@ -70,51 +50,42 @@ export const FormikYupPage = () => {
       >
         <CardContent>
           <Typography gutterBottom variant="h5">
-            Formik Basic
+            Formik Yup
           </Typography>
           <form onSubmit={handleSubmit} noValidate>
             <Grid container spacing={2}>
               <Grid xs={12} item>
                 <TextField
-                  onChange={handleChange}
-                  value={values.firstName}
-                  onBlur={handleBlur}
                   size="small"
                   type="tex"
                   label="First Name"
-                  name="firstName"
                   variant="outlined"
                   fullWidth
+                  {...getFieldProps("firstName")}
                   error={touched.firstName && Boolean(errors.firstName)}
                   helperText={touched.firstName && errors.firstName}
                 />
               </Grid>
               <Grid xs={12} item>
                 <TextField
-                  onChange={handleChange}
-                  value={values.lastName}
-                  onBlur={handleBlur}
                   size="small"
                   type="text"
                   label="Last Name"
-                  name="lastName"
                   variant="outlined"
                   fullWidth
+                  {...getFieldProps("lastName")}
                   error={touched.lastName && Boolean(errors.lastName)}
                   helperText={touched.lastName && errors.lastName}
                 />
               </Grid>
               <Grid xs={12} item>
                 <TextField
-                  onChange={handleChange}
-                  value={values.email}
-                  onBlur={handleBlur}
                   size="small"
                   type="email"
                   label="Email Address"
-                  name="email"
                   variant="outlined"
                   fullWidth
+                  {...getFieldProps("email")}
                   error={touched.email && Boolean(errors.email)}
                   helperText={touched.email && errors.email}
                 />

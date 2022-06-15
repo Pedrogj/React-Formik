@@ -49,7 +49,7 @@ export const RegisterPage = () => {
       >
         <CardContent>
           <Typography gutterBottom variant="h5">
-            Register
+            React Form
           </Typography>
           <form noValidate onSubmit={onSubmit}>
             <Grid container spacing={2}>

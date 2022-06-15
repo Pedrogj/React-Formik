@@ -14,12 +14,16 @@ import { Link } from "react-router-dom";
 
 const pages = [
   {
-    to: "register",
-    link: "Register",
+    to: "react-form",
+    link: "React Form",
   },
   {
     to: "formik-basic",
     link: "Formik Basic",
+  },
+  {
+    to: "formik-yup",
+    link: "Formik Yup",
   },
 ];
 
